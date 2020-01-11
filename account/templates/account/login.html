@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'account/css/reset.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'account/css/stylessheet.css' %}" />
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <form>
+            <h2>アカウントID、または、メールアドレス</h2>
+            <input name="account_id" type="text" required />
+            <h2>パスワード</h2>
+            <input name="password" type="password" required />
+        </form>
+        <a href="{% url goto %}">新規登録はこちら</a>
+<!--
+            <a href="{% url goto %}">パスワードをお忘れの方はこちら</a>
+-->
+    </body>
+</html>

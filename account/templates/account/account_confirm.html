@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'account/css/reset.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'account/css/stylessheet.css' %}" />
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <h2>{{ message }}</h2>
+        <form action="{% url next %}" method="POST">
+            {% csrf_token %}
+            <table>
+                {% for field in form %}
+                <tr>
+                    <th>{{ field.label }}</th>
+                    <td><input type="label" name="{{ field.name }}" value="{{ field.data }}" /></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <input type="hidden" name="next_flg" value="confirm" />
+            <input type="submit" value="{{ button_view }}" />
+        </form>
+        <br />
+        <a href="{% url goto %}">戻ります</a>
+    </body>
+</html>
