@@ -7,12 +7,16 @@ def index(request):
     return HttpResponse("Hello Portfolio")
 
 def login(request):
+    if 'session_confirm' in request.session:
+        request.session.flush()
+
     params = {
         'title': 'Login画面',
         'goto': 'edit',
     }
     return render(request, "account/login.html", params)
 
+'''
 def edit(request):
 
     title = '登録画面'
@@ -31,6 +35,6 @@ def edit(request):
         'next': 'edit',
         'form':  AccountForm(),
         }
-        return render(request, "account/edit.html", params)
 
     return render(request, "account/edit.html", params)
+    '''

@@ -1,13 +1,12 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 
-class AccountForm(forms.Form):
+class AccountForm(UserCreationForm):
     account_id = forms.CharField(label='アカウントID', required=True)
-#    account_id = forms.EmailField(label='アカウントID', required=True)
+    password = forms.CharField(label='パスワード', required=True)
+    password2 = forms.CharField(label='確認用パスワード', required=True)
     name = forms.CharField(label='名前')
 #    __birthday = forms.DateField(label='生年月日')
-    password = forms.CharField(label='パスワード', widget=forms.PasswordInput(), required=True)
-#    password2 = forms.CharField(label='確認用パスワード', required=True)
-
 '''
 
     @property

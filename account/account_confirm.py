@@ -17,24 +17,12 @@ class AccountConfirm(TemplateView):
         }
 
     def post(self, request):
-        self.params['form'] = AccountForm(request.POST)
-        print("dddddddddddd")
-        print(AccountForm(request.POST))
-        print("aaaaaaaaaaaaaaaaa")
-        print(self.params['form'])
-        print("っっっっっっっっっっb")
+        self.params["form"] = AccountForm(request.session['session_confirm'])
 
-        if 'next_flg' not in request.POST:
-            self.params['title'] = "登録画面"
-            self.params['next'] = "edit"
-            self.params['button_view'] = "登録"
-            return render(request, "account/account_edit.html", self.params)
+        ## DB登録実施
+        ## 登録成功有無
+        self.params["title"] = '登録完了画面'
+        self.params['next'] = "login"
 
-        if request.POST['next_flg'] == 'confirm':
-            ## DB登録実施
-            ## 登録成功有無
-            self.params["title"] = '登録完了画面'
-            self.params['next'] = "login"
-
-            # self.params["message"] = '登録失敗しました。再度入力してください。'
-            return render(request, "account/account_confirm.html", self.params)
+        # self.params["message"] = '登録失敗しました。再度入力してください。'
+        return render(request, "account/account_confirm.html", self.params)

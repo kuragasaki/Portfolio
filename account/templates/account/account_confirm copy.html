@@ -10,18 +10,20 @@
     <body>
         <h1>{{ title }}</h1>
         <h2>{{ message }}</h2>
-        <table>
-            {% for field in form %}
-            <tr>
-                <th>{{ field.label }}</th>
-                <td>{{ field.data }}</td>
-            </tr>
-            {% endfor %}
-        </table>
         <form action="{% url next %}" method="POST">
             {% csrf_token %}
+            <table>
+                {% for field in form %}
+                <tr>
+                    <th>{{ field.label }}</th>
+                    <td><input type="label" name="{{ field.name }}" value="{{ field.data }}" /></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <input type="hidden" name="next_flg" value="confirm" />
             <input type="submit" value="{{ button_view }}" />
         </form>
-        <a href="{% url goto %}">入力画面へ</a>
+        <br />
+        <a href="{% url goto %}">戻ります</a>
     </body>
 </html>

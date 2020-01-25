@@ -22,6 +22,9 @@
             {% csrf_token %}
             <input type="submit" value="{{ button_view }}" />
         </form>
-        <a href="{% url goto %}">入力画面へ</a>
+        <form action="{% url goto %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="入力画面へ" />
+        </form>
     </body>
 </html>

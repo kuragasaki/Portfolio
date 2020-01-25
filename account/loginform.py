@@ -7,4 +7,3 @@ class LoginForm(forms.Form):
     def __init__(self, accound_id, password):
         self._account_id = accound_id
         self._password = password
-

@@ -49,6 +49,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+#SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+#SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_FILE_PATH = '/tmp/Python/Portfolio'
 
 ROOT_URLCONF = 'Portfolio.urls'
 
