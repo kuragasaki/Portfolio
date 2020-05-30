@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'Employee/css/style.css' %}" />
+    </head>
+    <body>
+        <h1>{{ title }}ページ</h1>
+        <p>{{message | safe}}</p>
+        <table class="login_table">
+            <form actipn="{% url login %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_table }}
+                <tr>
+                    <td colspan="2" style="text-align:center;"><input type="submit" value="ログイン" /></td>
+                </tr>
+            </form>
+        </table>
+        <a href="{% url 'index' %}" >新規登録</a>
+    </body>
+</html>
