@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'Employee',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,7 @@ MIDDLEWARE = [
 #SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_FILE_PATH = '/tmp/Python/Portfolio'
+SESSION_FILE_PATH = 'SESSION_DIR'
 
 ROOT_URLCONF = 'Portfolio.urls'
 
