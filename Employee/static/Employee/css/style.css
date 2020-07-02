@@ -1,3 +1,7 @@
+body {
+    font-size: 16px;
+}
+
 h1 {
     font-size: 64px;
 }
@@ -7,10 +11,98 @@ h1 {
     height: 300px;
 }
 
-th, td {
-    width: 250px;
+th {
+    width: 200px;
 }
 
 th > label {
     text-align:right;
+}
+
+td {
+    width: 300px;
+}
+
+dt {
+    width: 150px;
+    float: left;
+    text-align: right;
+}
+
+dt::after {
+    content: "："
+}
+
+dd {
+/*
+    width: 400px;
+*/
+    padding-left: 10px;
+}
+
+dd > ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+dd > ul > li {
+    margin: 0 0 0 20px;
+    float: left;
+    width: 60px;
+}
+
+dt.dt_img {
+    clear: both;
+}
+
+dd.dd_img {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+dd.dd_img > input {
+    border: none;
+}
+
+.img_view {
+    width: 300px;
+}
+
+.pw_worning {
+    color: #ff0000;
+}
+
+.button_field {
+    clear: both;
+    margin: 0 auto 0 150px;
+    padding-top: 10px;
+/*
+    text-align: center;
+*/
+}
+
+.button_style {
+    font-size: 20px;
+    border-top: 1px solid #cccccc;
+}
+
+dd > input {
+    width: 500px;
+    border-top: 1px solid #000000;
+}
+
+input#id_admin_num {
+    width: 10px;
+}
+
+.dt_admin {
+    clear: both;
+}
+
+.dd_admin {
+    float: left;
+    margin: 0;
+    padding: 0;
 }

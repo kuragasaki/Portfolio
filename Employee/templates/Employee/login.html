@@ -10,14 +10,14 @@
         <h1>{{ title }}ページ</h1>
         <p>{{message | safe}}</p>
         <table class="login_table">
-            <form actipn="{% url login %}" method="POST">
+            <form actipn="{% url next_page %}" method="POST">
                 {% csrf_token %}
                 {{ form.as_table }}
                 <tr>
-                    <td colspan="2" style="text-align:center;"><input type="submit" value="ログイン" /></td>
+                    <td colspan="2" style="text-align:center;"><input class="button_style" type="submit" value="{{ button_val }}" /></td>
                 </tr>
             </form>
         </table>
-        <a href="{% url 'index' %}" >新規登録</a>
+        <a href="{% url 'new' %}" >新規登録</a>
     </body>
 </html>

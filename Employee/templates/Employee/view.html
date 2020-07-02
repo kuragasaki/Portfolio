@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'Employee/css/style.css' %}" />
+    </head>
+    <body>
+        <h1>{{ title }}ページ</h1>
+        <p>{{message | safe}}</p>
+        <form actipn="{% url next_page %}" method="POST">
+            <dl class="login_table">
+                {% csrf_token %}
+                <dt>{{ form.name }}</dt>
+                <dd>{{ form.password }}</dd>
+            </dl>
+            <p><input type="submit" value="修正" /></p>
+        </form>
+    </body>
+</html>
