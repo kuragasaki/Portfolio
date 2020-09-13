@@ -1,21 +1,70 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>{{ title }}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'Employee/css/style.css' %}" />
-    </head>
-    <body>
-        <h1>{{ title }}ページ</h1>
-        <p>{{message | safe}}</p>
-        <form actipn="{% url next_page %}" method="POST">
-            <dl class="login_table">
-                {% csrf_token %}
-                <dt>{{ form.name }}</dt>
-                <dd>{{ form.password }}</dd>
-            </dl>
-            <p><input type="submit" value="修正" /></p>
-        </form>
-    </body>
-</html>
+{% extends "Employee/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block contents %}
+    {% load static %}
+    <h1>{{ title }}ページ</h1>
+
+    <dl style="padding-left: 25%;">
+        <dt>名前</dt>
+        <dd>{{ emp_form.name.value }}</dd>
+        <dt>メールアドレス</dt>
+        <dd>{{ emp_form.email.value }}</dd>
+        <dt>パスワード</dt>
+        <dd>セキュリティの観点から入力された値は表示されません。</dd>
+        <dt>入社年月日</dt>
+        <dd>{{ emp_form.date_of_joining.value }}</dd>
+
+        {% if retirement_date_flg %}
+        <dt>退職年月日</dt>
+        <dd>
+            {{ emp_form.retirement_date.value }}
+        </dd>
+        {% endif %}
+
+        <dt>性別</dt>
+        {% if gender_flg %}
+        <dd>男性</dd>
+        {% endif %}
+        {% if not gender_flg %}
+        <dd>女性</dd>
+        {% endif %}
+        <dt class="dt_admin">管理者権限</dt>
+        <dd class="dd_admin">
+            {% if emp_form.admin_num.value %}
+            管理者権限有り
+            {% endif %}
+            {% if not emp_form.admin_num.value %}
+            権限無し
+            {% endif %}
+        </dd>
+        <dt class="dt_img">社員画像</dt>
+        <dd class="dd_img">
+            {% if img_name == "" %}
+            ファイル無し
+            {% endif %}
+
+            {% if img_name != "" %}
+            <br />
+            <img src="{% static 'Employee/images/' %}{{ img_name }}" class="img_view">
+            {% endif %}
+        </dd>
+    </dl>
+
+    <form class="form_class" action="{% url next_page %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in emp_form %}
+            {{field.as_hidden}}
+        {% endfor %}
+
+        <p class="button_field" style="margin: 0 auto 0 25%;">
+            <button class="button_style" type="submit" name="next_action" value="back" >{{ button_back }}</button>
+            {% if button_complete_flg %}
+            <button class="button_style" type="submit" name="next_action" value="complete" >{{ button_complete }}</button>
+            {% endif %}
+        </p>
+    </form>
+    <p class="button_field">
+        <a href="{% url previous_page %}" >{{ previous_page_name }}</a>
+    </p>
+{% endblock %}

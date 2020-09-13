@@ -1,62 +1,95 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>{{ title }}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'Employee/css/style.css' %}" />
-    </head>
-    <body>
-        <h1>{{ title }}ページ</h1>
-        <p>{{message | safe}}</p>
-        <form action="{% url next_page %}" method="{{ method_type }}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <dl>
-                <dt>名前</dt>
-                <dd>{{ emp_form.name }}</dd>
-                <dt>メールアドレス</dt>
-                <dd>{{ emp_form.email }}</dd>
-                <dt>パスワード{% if pw_edit_flg %}<strong class="pw_worning"> ※パスワードを修正しない場合は入力しないでください。 </strong>{% endif %}</dt>
-                <dd>{{ emp_form.password }}</dd>
+{% extends "Employee/base.html" %}
 
-                {% if view_flg %}
-                <dt>確認用パスワード</dt>
-                <dd><input type="password" name="password2" {{ pw2_required }} /></dd>
-                {% endif %}
+{% block title %}{{ title }}{% endblock %}
+{% block contents %}
+    {% load static %}
+    <h1>{{ title }}ページ</h1>
+    <p class="error_msg">{{message | safe}}</p>
+    <form class="form_class" action="{% url next_page %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <dl>
+            <dt>名前</dt>
+            <dd>{{ emp_form.name }}</dd>
 
-                <dt>入社年月日</dt>
-                <dd>{{ emp_form.date_of_joining }}</dd>
-                {% if date_of_joining %}
-                <dt>退職年月日</dt>
-                <dd>{{ emp_form.retirement_date }}</dd>
-                {% endif %}
-                <dt>性別</dt>
-                <dd>{{ emp_form.gender }}</dd>
-                <dt class="dt_admin">管理者権限</dt>
-                <dd class="dd_admin">
-                    {{ emp_form.admin_num }}
-                    {% if admin_input_flg %}
-                    ※管理者権限有り（チェック付き）
-                    {% endif %}
-                </dd>
-                <dt class="dt_img">社員画像</dt>
-                <dd class="dd_img">
+            {% if view_flg %}
+            <dt>メールアドレス</dt>
+            <dd>{{ emp_form.email }}</dd>
+            <dt>パスワード</dt>
+            <dd>{{ emp_form.password }}</dd>
+
+            <dt>確認用パスワード</dt>
+            <dd><input type="password" name="password2" {{ pw2_required }} /></dd>
+
+            <dt>入社年月日</dt>
+            <dd>{{ emp_form.date_of_joining }}</dd>
+            <dt>性別</dt>
+            <dd>{{ emp_form.gender }}</dd>
+            <dt class="dt_admin">管理者権限</dt>
+            <dd class="dd_admin">
+                {{ emp_form.admin_num }}
+                ※管理者権限有り（チェック付き）
+            </dd>
+            <dt class="dt_img">社員画像</dt>
+            <dd class="dd_img">
+                {{ emp_form.user_img }}
+            </dd>
+            {% endif %}
+
+            {% if not view_flg %}
+            <dt>メールアドレス</dt>
+            <dd>
+                {{ emp_form.email.value }}
+                {{ emp_form.email.as_hidden }}
+            </dd>
+            <dt>パスワード</dt>
+            <dd>
+                セキュリティの観点から入力された値は表示されません。
+                {{ emp_form.password.as_hidden }}
+            </dd>
+
+            <dt>入社年月日</dt>
+            <dd>
+                {{ emp_form.date_of_joining.value }}
+                {{ emp_form.date_of_joining.as_hidden }}
+            </dd>
+
+            <dt>退職年月日</dt>
+            <dd>{{ emp_form.retirement_date }}</dd>
+            <dt>性別{{ emp_form.gender.as_hidden }}</dt>
+            {% if gender_flg  %}
+            <dd>男性</dd>
+            {% endif %}
+            {% if not gender_flg %}
+            <dd>女性</dd>
+            {% endif %}
+            <dt class="dt_admin">管理者権限</dt>
+            <dd class="dd_admin">
+                {{ emp_form.admin_num }}
+                ※管理者権限有り（チェック付き）
+            </dd>
+            <dt class="dt_img">社員画像</dt>
+            <dd class="dd_img">
+                {% if img_name == "" %}
+                    <!-- 後々後から画像を修正する処理を追加{{ emp_form.user_img }}-->
+                    <!-- ファイル無し -->
+                    
                     {{ emp_form.user_img }}
-                    {% if user_img_flg %}
-                    <br />
-                    <img src="{% static 'Employee/images/' %}{{ emp_form.user_img }}" class="img_view">
-                    {% endif %}
-                </dd>
-            </dl>
-            <p class="button_field">
-                <input class="button_style" type="submit" value="{{ button_val }}" />
-                <input type="hidden" name="action_type" value="{{ action_type }}" />
-            </p>
-        </form>
-        {% if previous_page %}
+                {% endif %}
+    
+                {% if img_name != "" %}
+                <br />
+                <img src="{% static 'Employee/images/' %}{{ img_name }}" class="img_view">
+                    {{ emp_form.user_img.as_hidden }}
+                {% endif %}
+            </dd>
+            {% endif %}
+
+        </dl>
         <p class="button_field">
-            <a href="{% url previous_page %}" >{{ previous_page_name }}</a>
+            <input class="button_style" name="edit_button" type="submit" value="{{ button_val }}" />
         </p>
-        {% endif %}
-    </body>
-</html>
+    </form>
+    <p class="edit_a">
+        <a href="{% url previous_page %}" >{{ previous_page_name }}</a>
+    </p>
+{% endblock %}

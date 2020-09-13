@@ -1,0 +1,10 @@
+{% extends "Employee/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block contents %}
+    <h1>{{ title }}ページ</h1>
+    <p>{{message | safe}}</p>
+    <p class="edit_a">
+        <a href="{% url 'login' %}" >ログイン</a>
+    </p>
+{% endblock %}

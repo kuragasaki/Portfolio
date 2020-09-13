@@ -2,13 +2,44 @@ body {
     font-size: 16px;
 }
 
+body > p {
+    font-size: 16px;
+    text-align: center;
+}
+
+.error_msg {
+    color: #ff0000;
+}
+
 h1 {
     font-size: 64px;
+    text-align: center;
 }
 
 .login_table {
     width: 500px;
     height: 300px;
+    margin-left: 25%;
+}
+
+.view_dl {
+    padding-left: 20%;
+}
+
+.login_a, .edit_a {
+    margin: 0;
+}
+
+.form_class {
+    margin-left: 15%;
+}
+
+.search_form {
+    margin-left: 15%;
+}
+
+.search_result {
+    margin-left: 10%;
 }
 
 th {
@@ -67,7 +98,8 @@ dd.dd_img > input {
 }
 
 .img_view {
-    width: 300px;
+    width: 100%;
+    height: 100%;
 }
 
 .pw_worning {
@@ -105,4 +137,48 @@ input#id_admin_num {
     float: left;
     margin: 0;
     padding: 0;
+}
+
+ul#id_admin_num_choice > li {
+    width: 100px;
+}
+
+
+.search_table, .search_table > tbody > tr > th, .search_table > tbody > tr > td  {
+    border: 1px solid #000000;
+}
+
+.search_table > tbody > tr > th, .search_table > tbody > tr > td {
+    padding: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.search_id {
+    width: 50px;
+}
+
+.search_name {
+    width: 150px;
+}
+
+.search_email {
+    width: 200px;
+}
+
+.search_gender {
+    width: 100px;
+}
+
+.search_date {
+    width: 150px;
+}
+
+.search_admin {
+    width: 150px;
+}
+
+.button_id {
+    background-color: #ffffff;
+    border: none;
 }

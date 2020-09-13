@@ -8,7 +8,7 @@ def index(request):
 
 def login(request):
     if 'session_confirm' in request.session:
-        request.session.flush()
+        del request.session['session_confirm']
 
     params = {
         'title': 'Login画面',

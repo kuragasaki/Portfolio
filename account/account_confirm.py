@@ -17,6 +17,7 @@ class AccountConfirm(TemplateView):
         }
 
     def post(self, request):
+      #  accountForm = request.session['session_confirm']
         self.params["form"] = AccountForm(request.session['session_confirm'])
 
         ## DB登録実施

@@ -1,9 +1,11 @@
 import json
+from Crypto.Cipher import AES
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.core.serializers.json import DjangoJSONEncoder
 from .accountform import AccountForm
+from .tmp_file_CRUD import account_file
 # Create your views here.
 
 class AccountEdit(TemplateView):
@@ -26,7 +28,12 @@ class AccountEdit(TemplateView):
         return render(request, "account/account_edit.html", self.params)
 
     def post(self, request):
-        self.params['form'] = AccountForm(request.POST)
+        #accountForm = AccountForm(request.POST) 
+        accountForm = AccountForm(request.POST)
+
+#        account_file(request.POST, True)
+        account_file(accountForm, True)
+        self.params['form'] = accountForm
         if not request.POST["password"] == request.POST["password2"]:
             return render(request, "account/account_edit.html", self.params)
 
@@ -35,7 +42,7 @@ class AccountEdit(TemplateView):
         self.params["next"] = 'confirm'
         self.params["goto"] = 'edit'
 
-
+#        request.session['session_confirm'] = accountForm
         request.session['session_confirm'] = request.POST
 
         return render(request, "account/account_confirm.html", self.params)

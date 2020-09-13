@@ -1,0 +1,59 @@
+{% extends "Employee/search_base.html" %}
+
+{% block search_title %}{{ title }}{% endblock %}
+{% block search %}
+    <h1>{{ title }}ページ</h1>
+    <form action="{% url next_page %}" method="{{ method_type }}">
+        {% csrf_token %}
+        <!-- 検索条件入力枠 -->
+
+        <dl>
+            <!-- 名前（曖昧検索） -->
+            <dt>名前</dt>
+            <dd>{{ search_form.name }}</dd>
+
+            <!-- メールアドレス（一致検索） -->
+            <dt>メールアドレス</dt>
+            <dd>{{ search_form.email }}</dd>
+
+            <dt>入社年月日(期間)</dt>
+            <dd>{{ search_form.date_of_joining_before }}　〜　{{ search_form.date_of_joining_after }}</dd>
+
+            <dt>退職年月日(期間)</dt>
+            <dd>{{ search_form.retirement_date_before }}　〜　{{ search_form.retirement_date_after }}</dd>
+    
+            <!-- 性別（一致検索） -->
+            <dt>性別</dt>
+            <dd>{{ search_form.gender }}</dd>
+
+            <!-- 管理者（一致検索） -->
+            <dt class="dt_admin">管理者権限</dt>
+            <dd class="dd_admin">
+                {{ search_form.admin_num }}
+                ※管理者権限有り（チェック付き）
+            </dd>
+        </dl>
+
+        <p class="button_field">
+            <input class="button_style" name="edit_button" type="submit" value="{{ button_val }}" />
+        </p>
+    </form>
+{% endblock %}
+
+{% block search_result %}
+    <p class="error_msg">{{message | safe}}</p>
+    {% if emp_result_flg %}
+        <form action="{% url view_page %}" method="{{ method_type }}">
+        {% csrf_token %}
+        {{ emp_result.as_table }}
+    <!-- 検索結果一覧表示 -->
+    <!-- 名前（曖昧検索） -->
+    <!-- メールアドレス（一致検索） -->
+    <!-- 性別（一致検索） -->
+    <!-- 入社年月日（範囲検索） -->
+    <!-- 退社年月日（範囲検索） -->
+    <!-- 管理者（一致検索） -->
+
+</form>
+    {% endif %}
+{% endblock %}

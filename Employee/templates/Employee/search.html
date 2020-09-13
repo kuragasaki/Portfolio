@@ -1,0 +1,104 @@
+{% extends "Employee/search_base.html" %}
+
+{% block search_title %}{{ title }}{% endblock %}
+{% block search %}
+    <h1>{{ title }}ページ</h1>
+    <form class="search_form" action="{% url next_page %}" method="{{ method_type }}">
+        {% csrf_token %}
+        <!-- 検索条件入力枠 -->
+
+        <dl>
+            <!-- 名前（曖昧検索） -->
+            <dt>名前</dt>
+            <dd>{{ search_form.name }}</dd>
+
+            <!-- メールアドレス（一致検索） -->
+            <dt>メールアドレス</dt>
+            <dd>{{ search_form.email }}</dd>
+
+            <dt>入社年月日(期間)</dt>
+            <dd>{{ search_form.date_of_joining_before }}　〜　{{ search_form.date_of_joining_after }}</dd>
+
+            <dt>退職年月日(期間)</dt>
+            <dd>{{ search_form.retirement_date_before }}　〜　{{ search_form.retirement_date_after }}</dd>
+    
+            <!-- 性別（一致検索） -->
+            <dt>性別</dt>
+            <dd>{{ search_form.gender }}</dd>
+
+            <!-- 管理者（一致検索） -->
+            <dt class="dt_admin">管理者権限</dt>
+            <dd class="dd_admin_search">
+                {{ search_form.admin_num_choice }}
+            </dd>
+        </dl>
+
+        <p class="button_field">
+            <input class="button_style" name="edit_button" type="submit" value="{{ button_val }}" />
+        </p>
+    </form>
+{% endblock %}
+
+{% block search_result %}
+    <p class="error_msg">{{message | safe}}</p>
+    {% if emp_result_flg %}
+        <form class="search_result" action="{% url view_page %}" method="{{ method_type }}">
+        {% csrf_token %}
+            <table class="search_table">
+                <tbody>
+                    <tr>
+                        <th class="search_id">ID</th>
+                        <th class="search_name">名前</th>
+                        <th class="search_email">email</th>
+                        <th class="search_gender">性別</th>
+                        <th class="search_date">入社年月日</th>
+                        <th class="search_date">退職年月日</th>
+                        <th class="search_admin">管理者権限</th>
+                    </tr>
+                <!-- 検索結果一覧表示 -->
+                {% for employee in emp_result %}
+                    <tr>
+                        <!-- 登録ID -->
+                        <td class="search_id">
+                            <button class="button_id" type="submit" name="search_id" value="{{ employee.id }}" >{{ employee.id }}</button>
+                        </td>
+
+                        <!-- 名前 -->
+                        <td class="search_name">{{ employee.name }}</td>
+
+                        <!-- メールアドレス -->
+                        <td class="search_email">{{ employee.email }}</td>
+
+                        <!-- 性別 -->
+                        {% if employee.gender == 0 %}
+                        <td class="search_gender">男性</td>
+                        {% endif %}
+                        {% if employee.gender == 1 %}
+                        <td class="search_gender">女性</td>
+                        {% endif %}
+
+                        <!-- 入社年月日 -->
+                        <td class="search_date">{{ employee.date_of_joining }}</td>
+
+                        <!-- 退社年月日 -->
+                        {% if employee.retirement_date != None  %}
+                        <td class="search_date">{{ employee.retirement_date }}</td>
+                        {% endif %}
+                        {% if employee.retirement_date == None  %}
+                        <td class="search_date"><!-- 在籍中 --></td>
+                        {% endif %}
+
+                        <!-- 管理者 -->
+                        {% if employee.admin_num  %}
+                        <td class="search_admin">管理者</td>
+                        {% endif %}
+                        {% if not employee.admin_num  %}
+                        <td class="search_admin">一般社員</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    {% endif %}
+{% endblock %}
