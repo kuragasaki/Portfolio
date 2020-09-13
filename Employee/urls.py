@@ -16,6 +16,6 @@ urlpatterns = [
     path('search', SearchView.as_view(), name='search'),
     path('preview', FormPreview.as_view(), name='preview'),
     path('complete', CompleteView.as_view(), name='complete'),
-    path('game', GameView.as_view(), name='game'),
-    path('game/<int:test_id>/', GameView.as_view(), name='game'),
+#    path('game', GameView.as_view(), name='game'),
+#    path('game/<int:test_id>/', GameView.as_view(), name='game'),
 ]
